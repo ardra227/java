@@ -1,0 +1,83 @@
+import java.util.Map;
+import static java.util.Map.entry;
+class TwelveDays {
+    private static final String DAY_NUMBER = "_";
+    private static final String MAIN_LINE = "On the " + DAY_NUMBER + " day of Christmas my true love gave to me: ";
+    private static final String ON_FIRST_DAY = "a Partridge in a Pear Tree";
+    private static final String ON_SECOND_DAY = "two Turtle Doves";
+    private static final String ON_THIRD_DAY = "three French Hens";
+    private static final String ON_FOURTH_DAY = "four Calling Birds";
+    private static final String ON_FIFTH_DAY = "five Gold Rings";
+    private static final String ON_SIXTH_DAY = "six Geese-a-Laying";
+    private static final String ON_SEVENTH_DAY = "seven Swans-a-Swimming";
+    private static final String ON_EIGHTH_DAY = "eight Maids-a-Milking";
+    private static final String ON_NINTH_DAY = "nine Ladies Dancing";
+    private static final String ON_TENTH_DAY = "ten Lords-a-Leaping";
+    private static final String ON_ELEVENTH_DAY = "eleven Pipers Piping";
+    private static final String ON_TWELFTH_DAY = "twelve Drummers Drumming";
+    private static final int FIRST_DAY = 1;
+    private static final Map<Integer, String> days = Map.ofEntries(
+            entry(1, "first"),
+            entry(2, "second"),
+            entry(3, "third"),
+            entry(4, "fourth"),
+            entry(5, "fifth"),
+            entry(6, "sixth"),
+            entry(7, "seventh"),
+            entry(8, "eighth"),
+            entry(9, "ninth"),
+            entry(10, "tenth"),
+            entry(11, "eleventh"),
+            entry(12, "twelfth")
+    );
+    private static final Map<Integer, String> presents = Map.ofEntries(
+            entry(1, ON_FIRST_DAY),
+            entry(2, ON_SECOND_DAY),
+            entry(3, ON_THIRD_DAY),
+            entry(4, ON_FOURTH_DAY),
+            entry(5, ON_FIFTH_DAY),
+            entry(6, ON_SIXTH_DAY),
+            entry(7, ON_SEVENTH_DAY),
+            entry(8, ON_EIGHTH_DAY),
+            entry(9, ON_NINTH_DAY),
+            entry(10, ON_TENTH_DAY),
+            entry(11, ON_ELEVENTH_DAY),
+            entry(12, ON_TWELFTH_DAY)
+    );
+    private static final int TWELFTH_DAY = 12;
+    String verse(int verseNumber) {
+        final String firstPart = MAIN_LINE.replace(DAY_NUMBER, getWordOfNumber(verseNumber));
+        return firstPart +
+                getSecondPartOfLine(verseNumber) +
+                ".\n";
+    }
+    private String getSecondPartOfLine(int verseNumber) {
+        StringBuilder result = new StringBuilder();
+        if (verseNumber == FIRST_DAY) {
+            result.append(presents.get(verseNumber));
+            return result.toString();
+        }
+        for (int i = verseNumber; i > 0; i--) {
+            if (i == FIRST_DAY) {
+                result.append("and ");
+            }
+            result.append(presents.get(i));
+            if (i != FIRST_DAY) result.append(", ");
+        }
+        return result.toString();
+    }
+    private String getWordOfNumber(int verseNumber) {
+        return days.get(verseNumber);
+    }
+    String verses(int startVerse, int endVerse) {
+        StringBuilder result = new StringBuilder();
+        for (int i = startVerse; i <= endVerse; i++) {
+            result.append(verse(i));
+            if (i != endVerse) result.append("\n");
+        }
+        return result.toString();
+    }
+    String sing() {
+        return verses(FIRST_DAY, TWELFTH_DAY);
+    }
+}
